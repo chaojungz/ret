@@ -24,8 +24,7 @@ https://youtu.be/miil5HZjNo4
 # Project Description
 
 ## Setup
-### Step 1.1: definition of all path variables
-### Step 1.1 import of all used packages
+Definition of all path variables and inclusion of all supplementary packages. 
 
 ## Distortion
 The chessboard test images are loaded and transformed to grayscale. 
@@ -33,7 +32,7 @@ A 6*9 cell chessboard is "searched" using cv2.findChessboardCorders(...) and cv2
 The results are used to distort the test images using cv2.undistort(...).
 The results are visualized together with the original image.
 
-## Pipelines Preparation
+## Pipeline Preparation
 Functions for identification of linear lane segments (i.e., polynomial degree = 1, https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html) and a data storage object for the lanes are defined.
 
 ## Pipeline
