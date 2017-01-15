@@ -38,16 +38,25 @@ Functions for identification of linear lane segments (i.e., polynomial degree = 
 
 ## Pipeline
 The pipeline is the function getImageWithProjectionAndText( source_image ). 
+
 The interesting areas of the screen (i.e., bottom left, bottom right) for finding potential lanes is defined. Distance estimates are introduced and params are defined (e.g., pixel margin, min lane pixels for segment etc).
+
 Next, the video frame is distorted using the distortion coefficients for the front-facing camera.
+
 Next, the video frame is converted to grayscale and the Sobel filter is used to determine image gradients and edges. In particular, cv2.Sobel(...) is used. The usage follows cv2's recommendations (http://docs.opencv.org/3.0-beta/doc/py_tutorials/py_imgproc/py_gradients/py_gradients.html).
+
 Next, using cv2.bitwise_or(...) a binary image is generated.
+
 Next, the image is transformed using cv2.perspectiveTransform(...) and, subsequently, warped using cv2.warpPerspective(...). Empty warp projections are generated that will be used to draw lanes boundaries and the lane area. 
+
 Next, the lanes are searched and if found put on the warped slides (first left lane, then right lane). Lane curves are fitted using the polynomial of degree 2 [--> np.polyfit(...)]. https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html
-In addition, the curve radius is estimated for each lane separately and, then, averaged and multiplied by the estimated distance-factor (i.e., 300 pixel vertically divided by 15m vertically).
-For the lanes (left, right) and the lane area (between the lane boundaries), three warps are created. The lane area is filled using cv2.fillPoly(...). Finally, the three warps are stacked together. The lane area uses 50% transparency and the lane borders 20%.
+
+In addition, the curve radius is estimated for each lane separately and, then, averaged and multiplied by the estimated distance-factor (i.e., 300 pixel vertically divided by 15m vertically). For the lanes (left, right) and the lane area (between the lane boundaries), three warps are created. The lane area is filled using cv2.fillPoly(...). Finally, the three warps are stacked together. The lane area uses 50% transparency and the lane borders 20%.
+
 Finally, the coords of the car are computed using the center of the image in pixel and the estimated horizontal factor (--> horizontal_factor = 0.6*1280*2.5 #1280 pixel * 0.6 because lane is approx. 60% of screen at bottom * 2.5 because lane is approx. 2.5 wide).
+
 The curve degree and distance to center are written on the image using cv2.putText(...).
+
 Finally, the image is returned as the pipeline's result.
 
 ## Image Test
